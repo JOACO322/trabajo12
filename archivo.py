@@ -11,7 +11,8 @@ def imprimir_menu():
     print("1. Ver total de ventas")
     print("2. Ver total de ventas por año")
     print("3. Ver promedio de ventas por año")
-    print("4. Salir")
+    print("4. Ver promedio de ventas por trimestre")
+    print("5. Salir")
 
 
 def obtener_opcion():
@@ -23,7 +24,7 @@ def obtener_opcion():
 
 def ver_total_de_ventas():
     datos = open("datos.csv", "r")
-    print("Ventas totales:")
+
     total = 0
     _ = datos.readline()
     for linea in datos.readlines():
@@ -35,12 +36,14 @@ def ver_total_de_ventas():
             + int(datos_separados[3])
             + int(datos_separados[4])
         )
-    print(total)
+
     datos.close()
     datos = open("datos.csv", "r")
     for linea in datos.readlines():
         print(linea)
     datos.close()
+    print("Ventas totales:")
+    print(total)
 
 
 def ver_total_de_ventas_por_año():
@@ -64,7 +67,7 @@ def ver_total_de_ventas_por_año():
     datos.close()
 
 
-def ver_promedio_de_ventas_por_año():
+def ver_promedio_de_ventas_por_trimestre():
     datos = open("datos.csv", "r")
     _ = datos.readline()
 
@@ -85,6 +88,30 @@ def ver_promedio_de_ventas_por_año():
     datos.close()
 
 
+def ver_promedio_de_ventas_por_año():
+    datos = open("datos.csv", "r")
+    total = 0
+    _ = datos.readline()
+    contador = 0
+    for linea in datos.readlines():
+        datos_separados = linea.split(";")
+        total = (
+            total
+            + int(datos_separados[1])
+            + int(datos_separados[2])
+            + int(datos_separados[3])
+            + int(datos_separados[4])
+        )
+        contador = contador + 1
+    datos.close()
+    datos = open("datos.csv", "r")
+    for linea in datos.readlines():
+        print(linea)
+    datos.close()
+    print("Promedio de ventas por año:")
+    print(total / contador)
+
+
 while True:
     imprimir_menu()
     opcion = obtener_opcion()
@@ -95,6 +122,9 @@ while True:
     elif opcion == "3":
         ver_promedio_de_ventas_por_año()
     elif opcion == "4":
+        ver_promedio_de_ventas_por_trimestre()
+
+    elif opcion == "5":
         print("Programa finalizado")
         break
     print("1: Voler al menú \n2: Salir")
